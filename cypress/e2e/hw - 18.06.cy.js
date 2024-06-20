@@ -21,3 +21,11 @@ describe('Order product through site search', () => {
 
   });
 });
+
+//helperExample code
+// it('Homework', ()=>{
+//   cy.visit('/');
+//   cy.get('filter_keyword').type('i').closest('form').submit();
+
+//   findProduct('Fluid shine nail polish');
+// })

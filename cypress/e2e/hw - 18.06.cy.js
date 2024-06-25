@@ -12,7 +12,7 @@ describe('Order product through site search', () => {
     const productName = "Fluid shine nail polish";
 
     cy.log("Search by letter");
-    cy.visit('https://automationteststore.com/');
+    cy.visit('/');
 
     cy.get('#filter_keyword[placeholder="Search Keywords"]').type('E');
     cy.get('div.button-in-search').click();

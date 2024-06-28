@@ -8,6 +8,9 @@ class LoginPage extends BasePage {
         this.passwordInputField = '#loginFrm_password';
         this.loginButton = '[title="Login"]';
         this.errorMessageText = '.alert.alert-error.alert-danger';
+        this.ContinueButton = '[title="Continue"]';
+
+
     }
 
     visit() {
@@ -30,6 +33,9 @@ class LoginPage extends BasePage {
     getErrorMessageText() {
         return cy.get(this.errorMessageText);
     }
+    getContinueButton(){
+        return cy.get(this.ContinueButton);
+    }
 
     fillLoginForm(loginName, password) {
         cy.log("Fill login form");
@@ -42,6 +48,10 @@ class LoginPage extends BasePage {
         this.getLoginButton().click();
     }
 
+    clickContinueButton(){
+        cy.log("Redirect to the registration page");
+        this.getContinueButton().click();
+    }
 }
 
 export default new LoginPage();

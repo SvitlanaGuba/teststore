@@ -4,59 +4,47 @@ import loginPage from "../support/pages/LoginPage";
 import accountPage from "../support/pages/AccountPage";
 import productPage from "../support/pages/ProductPage";
 import shoppingCartPage from "../support/pages/ShoppingCartPage";
-import checkoutConfirmationPage from "../support/pages/CheckoutConfirmationPage";
-
-//cy.log("In the Header - Login Or Register");
-
-beforeEach(() => {
-  homePage.visit();
-  homePage.clickLoginOrRegisterButton();
-})
+import checkoutConfirmationPage from "../support/pages/CheckoutConfirmationPage"
 
 
-//cy.log("ACCOUNT LOGIN page");
+describe('Create order - positive test suite', () => {
 
-it('Successful authorization', () => {
-  loginPage.fillLoginForm(user.loginname, user.password);
-  loginPage.clickLoginButton();
-  accountPage.getFirstNameText().should('have.text', user.firstname);
-})
+  it('Create order', () => {
+    cy.log("Login Or Register Button");
+    homePage.visit();
+    homePage.clickLoginOrRegisterButton();
 
-//cy.log("Find product");
+    cy.log("ACCOUNT LOGIN page");
+    loginPage.fillLoginForm(user.loginname, user.password);
+    loginPage.clickLoginButton();
+    accountPage.getFirstNameText().should('have.text', user.firstname);
 
-it('Search for product "Fluid shine nail polish"', () => {
-  const productName = "Fluid shine nail polish";
+    cy.log("Find product");
+    const productName = "Fluid shine nail polish";
+    accountPage.searchForProduct(productName);
 
-  accountPage.searchForProduct(productName);
+    cy.log("Check product page");
+    const productName1 = "Fluid shine nail polish";
+    const productPrice = "$137.00";
 
-})
-//cy.log("Check product page");
+    productPage.verifyProductDetails(productName1, productPrice);
+    productPage.clickAddToCart();
 
-it('Verify product', () => {
-  const productName1 = "Fluid shine nail polish";
-  const productPrice = "$137.00";
+    cy.log("Check SHOPPING CART page");
+    const productName2 = "Fluid shine nail polish";
+    const productQuantity = 29;
+    const productPrice2 = 137.00;
+    const flatShippingRate = 2.00;
 
-  productPage.verifyProductDetails(productName1, productPrice);
-  productPage.clickAddToCart();
 
-})
+    shoppingCartPage.getProductPrice().then(productPrice => {
+      shoppingCartPage.verifyProductPrice(productName2, productPrice2, productQuantity, flatShippingRate );
+      shoppingCartPage.clickCheckoutButton();
+    })
 
-//cy.log("Check SHOPPING CART page");
 
-it('Search for product, verify details, and add to cart', () => {
-  const productName2 = "Fluid shine nail polish";
-  const productQuantity = 2;
-  const productPrice2 = "$137.00";
-  const flatShippingRate = 2.00;
+    cy.log("Check Checkout Confirmation page");
+    checkoutConfirmationPage.checkCheckoutText();
 
-  shoppingCartPage.getProductPrice().then(productPrice => {
-    shoppingCartPage.verifyProductPrice(productName2, productPrice2, productQuantity);
-    shoppingCartPage.clickCheckoutButton();
   })
-})
-//cy.log("Check Checkout Confirmation page");
-it('', () => {
-
-  checkoutConfirmationPage.checkCheckoutText();
-
 })

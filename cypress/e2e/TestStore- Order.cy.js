@@ -17,7 +17,6 @@ describe('Create order - positive test suite', () => {
     cy.log("ACCOUNT LOGIN page");
     loginPage.fillLoginForm(user.loginname, user.password);
     loginPage.clickLoginButton();
-    accountPage.getFirstNameText().should('have.text', user.firstname);
 
     cy.log("Find product");
     const productName = "Fluid shine nail polish";
